@@ -3,10 +3,10 @@ import React, { useState } from 'react';
 import { Ionicons } from "@expo/vector-icons";  
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
-// import { useNavigation } from "@react-navigation/native";
+import { useNavigation } from "@react-navigation/native";
 
 const SignUp = () => {
-    // const navigation = useNavigation();
+    const navigation = useNavigation();
     const [passwordVisible, setPasswordVisible] = useState(false);
 
     const [username, setUsername] = useState("");
@@ -17,6 +17,16 @@ const SignUp = () => {
     const [confirmPassword, setConfirmPassword] = useState("");
     const [errors, setErrors] = useState([]);
 
+    const resetForm = () => {
+      setUsername("");
+      setFirstName("");
+      setLastName("");
+      setEmail("");
+      setPassword("");
+      setConfirmPassword("");
+      setErrors([]);
+    };
+    
     const validateForm = () => {
       let isFormValid = true;
       if(username.trim() === ''){
@@ -61,7 +71,6 @@ const SignUp = () => {
       if (!validateForm()) {
         return; 
       }
-    
       const userData = {
         username,
         firstName,
@@ -83,7 +92,7 @@ const SignUp = () => {
         
         if (response.ok) {
           alert("Inscription réussie !");
-          // navigation.navigate("SignIn"); // Redirection vers la connexion
+          navigation.navigate("SignIn"); // Redirection vers la connexion
         } else {
           setErrors([data.message || "Une erreur est survenue."]);
         }
@@ -91,6 +100,7 @@ const SignUp = () => {
         console.error("Erreur lors de l'inscription :", error);
         setErrors(["Impossible de contacter le serveur."]);
       }
+      resetForm();
     };
     
   
@@ -189,13 +199,13 @@ export default SignUp;
 const styles = StyleSheet.create({
     container : {
         backgroundColor : "#fff",
-        marginTop : 25,
         flexGrow : 1,
         alignItems: "center",
         padding : 20
     },
     backButton : {
         alignSelf : "flex-start",
+        marginTop : 13,
         marginBottom : 5,
         backgroundColor : "#F7F7F9",
         borderRadius : 50,
