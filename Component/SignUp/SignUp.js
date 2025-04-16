@@ -3,10 +3,10 @@ import React, { useState } from 'react';
 import { Ionicons } from "@expo/vector-icons";  
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
-import { useNavigation } from "@react-navigation/native";
+// import { useNavigation } from "@react-navigation/native";
 
 const SignUp = () => {
-    const navigation = useNavigation();
+    // const navigation = useNavigation();
     const [passwordVisible, setPasswordVisible] = useState(false);
 
     const [username, setUsername] = useState("");
@@ -18,7 +18,6 @@ const SignUp = () => {
     const [errors, setErrors] = useState([]);
 
     const validateForm = () => {
-      
       let isFormValid = true;
       if(username.trim() === ''){
         setErrors(prevState => {
@@ -59,7 +58,6 @@ const SignUp = () => {
     }
     const submitForm = async () => {
       setErrors([]); 
-    
       if (!validateForm()) {
         return; 
       }
@@ -73,7 +71,7 @@ const SignUp = () => {
       };
     
       try {
-        const response = await fetch("http://localhost:8080/api/auth/signup", {
+        const response = await fetch("http://localhost:8083/users", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -85,7 +83,7 @@ const SignUp = () => {
         
         if (response.ok) {
           alert("Inscription réussie !");
-          navigation.navigate("SignIn"); // Redirection vers la connexion
+          // navigation.navigate("SignIn"); // Redirection vers la connexion
         } else {
           setErrors([data.message || "Une erreur est survenue."]);
         }
